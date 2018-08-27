@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/style.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GitHub Stocktaker</title>
+</head>
+<body>
+    <div id="app" :class="{active: counter > 0 && (counter / 2) / total < 1}" v-cloak>
+        <input v-model="token" type="text" @keyup.enter="update()" spellcheck="false" placeholder="PERSONAL ACCESS TOKEN">
+        <div class="progress" :style="{width: ((counter / 2) / total) * 100 + '%'}"></div>
+        <div v-if="!total">
+            <p>This tool can give you an overview of your GitHub account by showing all your repositories and branches in a tree-like structure.</p>
+            <p>To get started, <a href="https://github.com/settings/tokens" target="_blank">create a personal access token</a> on GitHub and paste it above.</p>
+        </div>
+        <ul>
+            <li v-for="result in results">
+                <a :href="result.url" :class="{private: result.private}" target="_blank">{{ result.name }}</a>
+                <ul><li v-for="branch in result.branches" :class="{ pages: branch == result.pages }">{{ branch }}</li></ul>
+            </li>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/combine/npm/vue@2,npm/promise-polyfill@8/dist/polyfill.min.js,npm/whatwg-fetch@2"></script>
+    <script src="scripts/script.min.js"></script>
+</body>
+</html>
