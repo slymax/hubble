@@ -16,7 +16,7 @@ const app = new Vue({
                     "Authorization": "token " + app.token
                 }
             };
-            fetch("https://api.github.com/user/repos?affiliation=owner", options).then(response => {
+            fetch("https://api.github.com/user/repos?affiliation=owner&per_page=100", options).then(response => {
                 return response.json();
             }).then(data => {
                 app.results = {};
